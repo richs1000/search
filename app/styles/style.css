@@ -1,0 +1,65 @@
+
+body{
+	background-attachment: fixed;
+	text-align: left;
+}
+
+
+#graphCanvas {
+    border: 10px inset blue;
+}
+
+#treeCanvas {
+    border: 10px inset blue;
+}
+
+#lblQuestion {
+	font-size: 24px;
+}
+
+.btn {
+	margin-top: 12px;
+}
+
+#txtAnswer {
+	font-size: 24px;
+}
+
+.adjacencyMatrixSquare {
+	font-size: 14px;
+	text-align: center;
+}
+
+.adjacencyListSquare {
+	font-size: 14px;
+	text-align: center;
+	display: inline;
+}
+
+th {
+	text-align: center;
+}
+
+#txtFeedback {
+	font-size: 24px;
+}
+
+.answerBlock{
+	width:30px;
+	height:30px;
+	border: 1px inset black;
+	display: inline-block;
+	margin-right: 2px;
+}
+
+.noAnswer{
+	background:white;
+}
+
+.rightAnswer{
+    background:green;
+}
+
+.wrongAnswer{
+    background:red;
+}
