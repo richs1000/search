@@ -1,4 +1,4 @@
-function TreeNode(_path, _totalPathCost) {
+function TreeNode(_path) {
 	// each tree node represents a unique path through the graph
 	// represented as a list of indices for the graph nodes array
 	this.path = _path;
@@ -51,7 +51,7 @@ TreeModel.prototype.totalPathCost = function(_treeNodeIndex) {
 		// get the end of the edge
 		var toNodeIndex = this.treeNodes[_treeNodeIndex].path[pathIndex];
 		// add the cost of the current edge
-		totalCost += this.dataModel.graph.edgeCost(fromNodeIndex, toNodeIndex);
+		totalCost += this.simModel.graph.edgeCost(fromNodeIndex, toNodeIndex);
 	}
 	return totalCost;
 }
@@ -75,21 +75,21 @@ TreeModel.prototype.newTreeRoot = function(_rootNodeIndex) {
 	var newTreehNode = new TreeNode([_rootNodeIndex]);
 	// Add TreeNode object to end of array of nodes
 	this.treeNodes.push(newTreeNode);
-	// Add TreeNode object to the end of the fringe
-	this.fringe.push(newTreeNode);
 }
 
 
-TreeModel.prototype.newTreeNode = function(_newGraphNodeIndex, _parentTreeNodeIndex) {
+TreeModel.prototype.newTreeNode = function(_newGraphNodeIndex, _edgeCost, _parentTreeNodeIndex) {
 	// the path consists of the path stored in the parent tree node + the new node index
 	// start by copying the parent's path
 	var nodePath = this.treeNodes[_parentTreeNodeIndex].path.slice();
-	// add the child
+	// add the child - the index of the node in the graph
 	nodePath.push(_newGraphNodeIndex);
 	// Create a TreeNode object
 	var newTreehNode = new TreeNode(nodePath);
 	// Add TreeNode object to end of array of nodes
 	this.treeNodes.push(newTreeNode);
-	// Add TreeNode object to the end of the fringe
-	this.fringe.push(newTreeNode);
+	// Create the tree edge
+	var newTreeEdge = new TreeEdge(_parentTreeNodeIndex, this.treeNodes.length - 1);
+	// Add the edge to our array of edges
+	this.treeEdges.push(newTreeEdge);
 }

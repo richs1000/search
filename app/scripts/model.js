@@ -27,11 +27,7 @@ function getRandomInt(min, max) {
 }
 
 
-/*
- * The GraphModel consists of an array of nodes and an array
- * of edges.
- */
-function DataModel(_controller, _attrs) {
+function SimModel(_controller, _attrs) {
 	// save a link to the controller
 	this.controller = _controller;
 	// we want DataModel to inherit from CapiModel so SmartSparrow
@@ -58,45 +54,29 @@ function DataModel(_controller, _attrs) {
  * This defines CapiModel as the prototype for GraphModel, so we inherit
  * from CapiModel
  */
-DataModel.prototype = new pipit.CapiAdapter.CapiModel;
-
-
-DataModel.prototype.getNextNodeFromFringe = function(_searchAlgorithm) {
-	// depth-first search: choose most-recently-added node, which is
-	// at end of fringe
-	if (_searchAlgorithm == 'DFS') {
-		return this.fringe.pop();
-	}
-	// breadth-first search: choose least-recently-added node, which is
-	// at start of fringe
-
-	// uniform cost search: choose node with lowest total cost
-
-	// greedy search: choose node with lowest heuristic
-
-	// A* search: choose node with lowest sum of cost + heuristic
-}
+SimModel.prototype = new pipit.CapiAdapter.CapiModel;
 
 
 /*
  * Initialize the components of the data model
  */
-DataModel.prototype.initializeDataModel = function() {
+SimModel.prototype.resetSimModel = function() {
 	// graph that is searched
-	this.graph = new GraphModel(this, this.get('undirected'), this.get('weighted'));
+	this.graph = new GraphModel(this, this.get('undirected'), 'true');
 	// search tree that is constructed during the search process
 	this.tree = new TreeModel(this);
 	// fringe that stores intermediate search results
-	this.fringe = [];
+	this.fringe = new FringeModel(this);
 	// closed list that stores nodes that have already been searched
 	this.closedList = [];
+	// what search algorithm are we using?
+	this.searchAlgorithm = this.get('searchAlgorithm');
 	// the question bank stores a list of questions and the answer history
-	this.questionBank = new QuestionBank(this, this.get('numerator'), this.get('denominator'), this.get('firstQuestion'), this.get('lastQuestion'));
+	//this.questionBank = new QuestionBank(this, this.get('numerator'), this.get('denominator'), this.get('firstQuestion'), this.get('lastQuestion'));
 }
 
 
-
-DataModel.prototype.search = function(_startNodeIndex, _searchAlgorithm, _graphSearch) {
+SimModel.prototype.search = function(_startNodeIndex, _searchAlgorithm, _graphSearch) {
 	//
 	// start with...
 	//

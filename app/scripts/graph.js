@@ -13,16 +13,6 @@ function GraphNode(_nodeName) {
 } // GraphNode
 
 
-GraphNode.prototype.heuristic = function () {
-	return getRandomInt(0, 10);
-};
-
-
-GraphNode.prototype.goalTest = function() {
-	return true;
-}
-
-
 /*
  * GraphEdge represents the edges/arcs between nodes in the
  * graph. A graph edge has a start node, an end node and a
@@ -45,8 +35,22 @@ function GraphEdge(_fromNodeIndex, _toNodeIndex, _cost) {
 function GraphModel(_dataModel, _undirected, _weighted) {
 	// store a pointer to the data model
 	this.dataModel = _dataModel;
+	// set flag for whether this is a directed or undirected graph
+	this.undirected = _undirected == 'true';
+	// set flag for whether this is a weighted or unweighted graph
+	this.weighted = _weighted == 'true';
 	// create a new graph
-	this.createNewGraph(_undirected, _weighted);
+	this.createNewGraph();
+}
+
+
+GraphModel.prototype.heuristic = function (_graphNodeIndex) {
+	return getRandomInt(0, 10);
+};
+
+
+GraphModel.prototype.goalTest = function(_graphNodeIndex) {
+	return true;
 }
 
 
@@ -55,7 +59,7 @@ function GraphModel(_dataModel, _undirected, _weighted) {
  * node class. Since my graph is pre-made, I can put it in the graph
  * object.
  */
-GraphModel.prototype.expand = function(graphNodeIndex) {
+GraphModel.prototype.expand = function(_graphNodeIndex) {
 	return [];
 }
 
@@ -69,7 +73,7 @@ GraphModel.prototype.expand = function(graphNodeIndex) {
  * and adjacency matrix are used to answer questions posed to the
  * user.
 */
-GraphModel.prototype.createNewGraph = function(_undirected, _weighted) {
+GraphModel.prototype.createNewGraph = function() {
 	// This as a quick, cheap way to store each node's neighbors.
 	// Each list contains all the nodes that could connect to the
 	// index node
@@ -95,10 +99,6 @@ GraphModel.prototype.createNewGraph = function(_undirected, _weighted) {
 	this.graphNodes = [];
 	// reset array of edges - starts off empty
 	this.graphEdges = [];
-	// is the graph directed or undirected?
-	this.undirected = _undirected;
-	// are there weights/costs attached to each edge?
-	this.weighted = _weighted;
 	// create nodes and edges
 	for (var startNodeIndex = 0;  startNodeIndex < neighborList.length; startNodeIndex++) {
 		// add the node to our list of nodes - create a name for the node by
@@ -146,11 +146,11 @@ GraphModel.prototype.createNewGraph = function(_undirected, _weighted) {
 /*
  * This function returns the index of a tree node based on its ID
  */
-GraphModel.prototype.nodeIndex = function(nodeName) {
+GraphModel.prototype.nodeIndex = function(_nodeName) {
 	// loop through nodes in tree
 	for	(var index = 0; index < this.graphNodes.length; index++) {
 		// check whether the current nodeID is the target nodeID
-	    if (this.graphNodes[index].nodeName == nodeName)
+	    if (this.graphNodes[index].nodeName == _nodeName)
 	    	// return the index of the target nodeID within the
 	    	// node array
 	    	return index;
@@ -164,12 +164,12 @@ GraphModel.prototype.nodeIndex = function(nodeName) {
  * This function returns the index of an edge based on its
  * fromNodeID and toNodeID
  */
-GraphModel.prototype.edgeIndex = function(fromNodeIndex, toNodeIndex) {
+GraphModel.prototype.edgeIndex = function(_fromNodeIndex, _toNodeIndex) {
 	// loop through edges in tree
 	for	(var index = 0; index < this.graphEdges.length; index++) {
 		// check whether the current nodeID is the target nodeID
-	    if (this.graphEdges[index].fromNodeIndex == fromNodeIndex &&
-	    	this.graphEdges[index].toNodeIndex == toNodeIndex)
+	    if (this.graphEdges[index].fromNodeIndex == _fromNodeIndex &&
+	    	this.graphEdges[index].toNodeIndex == _toNodeIndex)
 	    	// return the index of the target nodeID within the
 	    	// node array
 	    	return index;
@@ -183,12 +183,12 @@ GraphModel.prototype.edgeIndex = function(fromNodeIndex, toNodeIndex) {
  * This function returns the cost of an edge based on its
  * fromNodeID and toNodeID
  */
-GraphModel.prototype.edgeCost = function(fromNodeIndex, toNodeIndex) {
+GraphModel.prototype.edgeCost = function(_fromNodeIndex, _toNodeIndex) {
 	// loop through edges in tree
 	for	(var index = 0; index < this.graphEdges.length; index++) {
 		// check whether the current nodeID is the target nodeID
-	    if (this.graphEdges[index].fromNodeIndex == fromNodeIndex &&
-	    	this.graphEdges[index].toNodeIndex == toNodeIndex)
+	    if (this.graphEdges[index].fromNodeIndex == _fromNodeIndex &&
+	    	this.graphEdges[index].toNodeIndex == _toNodeIndex)
 	    	// return the index of the target nodeID within the
 	    	// node array
 	    	return this.graphEdges[index].cost;
@@ -201,29 +201,30 @@ GraphModel.prototype.edgeCost = function(fromNodeIndex, toNodeIndex) {
 /*
  * This function is used to add a node to the nodes array
  */
-GraphModel.prototype.addNodeToGraph = function(nodeName) {
+GraphModel.prototype.addNodeToGraph = function(_nodeName) {
 	// does the node already exist?
-	if (this.nodeIndex(nodeName) >= 0) return;
+	if (this.nodeIndex(_nodeName) >= 0) return;
 	// Create a GraphNode object
-	var newGraphNode = new GraphNode(nodeName);
+	var newGraphNode = new GraphNode(_nodeName);
 	// Add GraphNode object to end of array of nodes
 	this.graphNodes.push(newGraphNode);
 }
 
+
 /*
  * This function is used to add an edge to the edges array
  */
-GraphModel.prototype.addEdgeToGraph = function(fromNodeIndex, toNodeIndex, cost, doubleEdge) {
+GraphModel.prototype.addEdgeToGraph = function(_fromNodeIndex, _toNodeIndex, _cost, _doubleEdge) {
 	// are the from and to nodes the same?
-	if (fromNodeIndex == toNodeIndex) return;
+	if (_fromNodeIndex == _toNodeIndex) return;
 	// Is cost at least 0?
-	if (cost < 0) return;
+	if (_cost < 0) return;
 	// does the edge already exist?
-	if (this.edgeIndex(fromNodeIndex, toNodeIndex) >= 0) return;
+	if (this.edgeIndex(_fromNodeIndex, _toNodeIndex) >= 0) return;
 	// Create a GraphEdge object
-	var newGraphEdge = new GraphEdge(fromNodeIndex, toNodeIndex, cost);
+	var newGraphEdge = new GraphEdge(_fromNodeIndex, _toNodeIndex, _cost);
 	// set the doubleEdge flag
-	newGraphEdge.doubleEdge = doubleEdge
+	newGraphEdge.doubleEdge = _doubleEdge
 	// Add GraphEdge object to array of graphEdges
 	this.graphEdges.push(newGraphEdge);
 }
