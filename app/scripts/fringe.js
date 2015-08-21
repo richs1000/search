@@ -2,7 +2,7 @@
  * Each node in the fringe represents a node in the search tree. Each node
  * in the search tree represents a unique path through the graph.
  */
-function FringeNode(_path, _totalCost, _heuristic) {
+function FringeNode(_path, _totalCost, _heuristic, _searchTreeNodeIndex) {
 	// the path through the graph - stored as an array of node indexes
 	this.path = _path;
 	// the total cost of the path through the graph
@@ -10,6 +10,17 @@ function FringeNode(_path, _totalCost, _heuristic) {
 	// the heuristic value of the tree node is the heuristic value of the
 	// last node in the path represented by the node
 	this.heuristic = _heuristic;
+	// this points to the index of the corresponding node in the tree
+	this.searchTreeNodeIndex = _searchTreeNodeIndex;
+}
+
+
+/*
+ * Return the node index of the last node in the path represented by this
+ * tree node. I need the last node in order to expand the tree node.
+ */
+FringeNode.prototype.lastNodeInPath = function() {
+	return this.path[this.path.length - 1];
 }
 
 
@@ -34,9 +45,9 @@ function FringeModel(_simModel) {
 }
 
 
-FringeModel.prototype.addNode = function(_path, _totalCost, _heuristic) {
+FringeModel.prototype.addNode = function(_path, _totalCost, _heuristic, _searchTreeNodeIndex) {
 	// create a new fringe node object
-	var newFringeNode = new FringeNode(_path, _totalCost, _heuristic);
+	var newFringeNode = new FringeNode(_path, _totalCost, _heuristic, _searchTreeNodeIndex);
 	// push it on to the end of the fringe
 	this.fringeNodes.push(newFringeNode);
 }
@@ -154,7 +165,7 @@ FringeModel.prototype.lowestGScore = function() {
  * Which node is removed from the fringe depends on which algorithm we
  * are using
  */
-FringeModel.prototype.removeNode = function(_searchAlgorithm) {
+FringeModel.prototype.getNextNodeFromFringe = function(_searchAlgorithm) {
 	// BFS - take node at front of fringe (added least recently)
 	if (_searchAlgorithm == 'BFS') {
 		return this.fringeNodes.shift();

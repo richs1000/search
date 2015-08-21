@@ -14,12 +14,26 @@
 		<div class="starter-template">
 			<div class="container">
 
-				<div class="row">
-					<div id="searchAlgButtons">
+				<div id="searchAlgButtons" class="row">
+					<h3>Choose a search algorithm...</h3>
+					<div class="col-md-1"></div>
+					<div class="col-md-1">
 						<button id="btnDFS" type="button" class="btn btn-primary btnSearch">DFS</button>
+					</div>
+					<div class="col-md-1"></div>
+					<div class="col-md-1">
 						<button id="btnBFS" type="button" class="btn btn-primary btnSearch">BFS</button>
+					</div>
+					<div class="col-md-1"></div>
+					<div class="col-md-1">
 						<button id="btnUCS" type="button" class="btn btn-primary btnSearch">UCS</button>
+					</div>
+					<div class="col-md-1"></div>
+					<div class="col-md-1">
 						<button id="btnGreedy" type="button" class="btn btn-primary btnSearch">Greedy</button>
+					</div>
+					<div class="col-md-1"></div>
+					<div class="col-md-1">
 						<button id="btnAStar" type="button" class="btn btn-primary btnSearch">A*</button>
 					</div>
 				</div>
@@ -27,29 +41,37 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div id="canvas">
+							<h3>Graph</h3>
 							<canvas id="graphCanvas" width="400" height="400"></canvas>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div id="canvas">
+							<h3>Search Tree</h3>
 							<canvas id="treeCanvas" width="400" height="400"></canvas>
 						</div>
 					</div>
 				</div>
 
 				<div class="row">
-					<div id="closedListView">
+					<h3>Closed List</h3>
+					<div id="closedListDiv">
 					</div>
 				</div>
 
 				<div class="row">
-					<div id="fringeView">
+					<h3>Fringe</h3>
+					<div id="fringeTableDiv">
 					</div>
 				</div>
 
 				<div class="row">
-						<div class="form-group">
+						<div class="col-md-2">
 							<button id="btnReset" type="button" class="btn btn-primary">Reset</button>
+						</div>
+						<div class="col-md-8">
+						</div>
+						<div class="col-md-2">
 							<button id="btnStep" type="button" class="btn btn-primary" disabled="true">Step</button>
 						</div>
 				</div>
@@ -70,6 +92,7 @@
 		<script src="app/scripts/graphview.js"></script>
 		<script src="app/scripts/treeview.js"></script>
 		<script src="app/scripts/fringeview.js"></script>
+		<script src="app/scripts/closedlistview.js"></script>
 		<script src="app/scripts/view.js"></script>
 		<script src="app/scripts/controller.js"></script>
 

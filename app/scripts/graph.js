@@ -50,7 +50,7 @@ GraphModel.prototype.heuristic = function (_graphNodeIndex) {
 
 
 GraphModel.prototype.goalTest = function(_graphNodeIndex) {
-	return true;
+	return false;
 }
 
 
@@ -60,7 +60,16 @@ GraphModel.prototype.goalTest = function(_graphNodeIndex) {
  * object.
  */
 GraphModel.prototype.expand = function(_graphNodeIndex) {
-	return [];
+	var expansionList = [];
+	// go through all the edges
+	for (var e = 0; e < this.graphEdges.length; e++) {
+		// if we find an edge with the target node at the head...
+		if (this.graphEdges[e].fromNodeIndex == _graphNodeIndex) {
+			// add the tail to the expansion list
+			expansionList.push(this.graphEdges[e].toNodeIndex);
+		}
+	}
+	return expansionList;
 }
 
 

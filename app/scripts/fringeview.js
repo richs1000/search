@@ -19,6 +19,9 @@ function FringeView(_simView) {
 */
 
 FringeView.prototype.drawFringe = function(_fringe) {
+	// erase the old fringe
+	$( "#fringeTableDiv" ).html('');
+	// start with an empty string
 	var bigTableString = "";
 	bigTableString += "<table id='fringeTable' border='1'>\n";
 	// table header
@@ -38,7 +41,16 @@ FringeView.prototype.drawFringe = function(_fringe) {
 		//start a new row
 		bigTableString += "<tr>\n";
 		bigTableString += "<th scope='row' text-align='center'>" + f + "</th>\n";
-		bigTableString += "<td>" + _fringe.fringeNodes[f].path + "</td>\n";
+		// when displaying the path, show the names of each node, not their index
+		var pathString = "";
+		for (var i = 0; i < _fringe.fringeNodes[f].path.length; i++) {
+			// index of the node within the graph nodes list
+			var nodeIndex = _fringe.fringeNodes[f].path[i];
+			// add the name to the path string
+			pathString += this.simView.controller.simModel.graph.graphNodes[nodeIndex].nodeName;
+		}
+		bigTableString += "<td>" + pathString + "</td>\n";
+
 		bigTableString += "<td>" + f + "</th>\n";
 		bigTableString += "<td>" + _fringe.fringeNodes[f].totalCost + "</td>\n";
 		bigTableString += "<td>" + _fringe.fringeNodes[f].heuristic + "</td>\n";

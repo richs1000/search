@@ -36,7 +36,7 @@ body{
 	display: inline;
 }
 
-th {
+th, td {
 	text-align: center;
 }
 

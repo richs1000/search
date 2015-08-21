@@ -19,10 +19,10 @@ function SimController() {
 		mastery: 'false',					// true when mastery condition is satisfied
 		numerator: 4,							// must get <numerator> questions right...
 		denominator: 5,						// out of the last <denominator> questions
-		undirected: 'true',				// directed or undirected edges in graph
 		firstQuestion: 0,					// index of first question in question bank
 		lastQuestion: 0,					// index of last question in question bank
 		searchAlgorithm: 'DFS',		// search algorithm to use
+		graphSearch: 'true',			// true when we use the closed list
 	});
 	//
 	// expose model data to Smart Sparrow
@@ -30,10 +30,10 @@ function SimController() {
 	pipit.CapiAdapter.expose('mastery', this.simModel);
 	pipit.CapiAdapter.expose('numerator', this.simModel);
 	pipit.CapiAdapter.expose('denominator', this.simModel);
-	pipit.CapiAdapter.expose('undirected', this.simModel);
 	pipit.CapiAdapter.expose('firstQuestion', this.simModel);
 	pipit.CapiAdapter.expose('lastQuestion', this.simModel);
 	pipit.CapiAdapter.expose('searchAlgorithm', this.simModel);
+	pipit.CapiAdapter.expose('graphSearch', this.simModel);
 	// let smart sparrow know that the sim is ready to accept values
 	pipit.Controller.notifyOnReady();
 	// initialize the data model

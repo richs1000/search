@@ -72,7 +72,7 @@ TreeModel.prototype.heuristic = function(_treeNodeIndex) {
 
 TreeModel.prototype.newTreeRoot = function(_rootNodeIndex) {
 	// Create a TreeNode object - path is just the root
-	var newTreehNode = new TreeNode([_rootNodeIndex]);
+	var newTreeNode = new TreeNode([_rootNodeIndex]);
 	// Add TreeNode object to end of array of nodes
 	this.treeNodes.push(newTreeNode);
 }
@@ -85,11 +85,13 @@ TreeModel.prototype.newTreeNode = function(_newGraphNodeIndex, _edgeCost, _paren
 	// add the child - the index of the node in the graph
 	nodePath.push(_newGraphNodeIndex);
 	// Create a TreeNode object
-	var newTreehNode = new TreeNode(nodePath);
+	var newTreeNode = new TreeNode(nodePath);
 	// Add TreeNode object to end of array of nodes
 	this.treeNodes.push(newTreeNode);
 	// Create the tree edge
 	var newTreeEdge = new TreeEdge(_parentTreeNodeIndex, this.treeNodes.length - 1);
 	// Add the edge to our array of edges
 	this.treeEdges.push(newTreeEdge);
+	// return the index of the newly-created tree node
+	return this.treeNodes.length - 1;
 }

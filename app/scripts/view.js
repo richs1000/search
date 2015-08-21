@@ -31,9 +31,9 @@ SimView.prototype.updateDisplay = function() {
 	// draw the tree
 
 	// draw the fringe
-
+	this.fringeView.drawFringe( this.controller.simModel.fringe );
 	// draw the closed list
-
+	this.closedListView.drawClosedList( this.controller.simModel.closedList );
 }
 
 
@@ -45,7 +45,7 @@ SimView.prototype.resetSimView = function() {
 	// create a view controller for the fringe
 	this.fringeView = new FringeView(this);
 	// create a view controller for the closed list
-	//this.closedListView = new ClosedListView(this);
+	this.closedListView = new ClosedListView(this);
 	// create a view cotroller for the question bank
 	//this.questionBankView = new QuestionBankView(this);
 	// re-draw the display
@@ -85,14 +85,16 @@ SimView.prototype.setupControls = function() {
 		simController.resetSim();
 		// re-activate the search buttons
 		$( ".btnSearch" ).prop('disabled', false);
+		// reactivate the step button
+		$( "#btnStep" ).prop('disabled', false)
 	});
 	// add event for step button
 	$( " #btnStep ").click(function() {
 		// de-activate the search buttons
 		$( ".btnSearch" ).prop('disabled', true);
 		// pick a node from the fringe, expand it
-		graphController.simModel.nextStep();
+		simController.simModel.searchStep();
 		// update the display
-		graphController.simView.updateDisplay();
+		simController.simView.updateDisplay();
 	});
 }
