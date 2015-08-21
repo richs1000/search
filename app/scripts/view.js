@@ -23,6 +23,21 @@ function SimView(_controller) {
 }
 
 
+SimView.prototype.updateButtons = function() {
+	// unhighlight all the buttons
+	$( '.btnSearch' ).removeClass('chosenButton');
+	// highlight the correct search algorithm
+	var btnString = '#btn' + this.controller.simModel.searchAlgorithm;
+	$( btnString ).addClass('chosenButton');
+	// highlight graph or tree serach button
+	if (this.controller.simModel.graphSearch) {
+		$( '#btnGraph' ).addClass('chosenButton');
+	} else {
+		$( '#btnTree' ).addClass('chosenButton');
+	}
+}
+
+
 SimView.prototype.updateDisplay = function() {
 	// draw the graph - nodes, edges, undirected
 	this.graphView.drawGraph(	this.controller.simModel.graph.graphNodes,
@@ -34,6 +49,12 @@ SimView.prototype.updateDisplay = function() {
 	this.fringeView.drawFringe( this.controller.simModel.fringe );
 	// draw the closed list
 	this.closedListView.drawClosedList( this.controller.simModel.closedList );
+	// draw the solution
+
+	// draw the buttons
+	this.updateButtons();
+	// show the solution
+	this.solutionView.drawSolution( this.controller.simModel.solution );
 }
 
 
@@ -46,8 +67,8 @@ SimView.prototype.resetSimView = function() {
 	this.fringeView = new FringeView(this);
 	// create a view controller for the closed list
 	this.closedListView = new ClosedListView(this);
-	// create a view cotroller for the question bank
-	//this.questionBankView = new QuestionBankView(this);
+	// create a view controller for the solution
+	this.solutionView = new SolutionView(this);
 	// re-draw the display
 	this.updateDisplay();
 	// present the question
@@ -91,7 +112,7 @@ SimView.prototype.setupControls = function() {
 	// add event for step button
 	$( " #btnStep ").click(function() {
 		// de-activate the search buttons
-		$( ".btnSearch" ).prop('disabled', true);
+		//$( ".btnSearch" ).prop('disabled', true);
 		// pick a node from the fringe, expand it
 		simController.simModel.searchStep();
 		// update the display

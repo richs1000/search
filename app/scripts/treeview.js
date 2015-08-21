@@ -22,7 +22,7 @@ TreeView.prototype.setupTreeView = function() {
 	// erase the canvas
 	this.treeContext.clearRect(0, 0, this.treeCanvas.width, this.treeCanvas.height);
 	// set canvas to 2/3 width of window
-	this.treeContext.canvas.width  = (window.innerWidth * 2 / 3) - 10;
+	//this.treeContext.canvas.width  = (window.innerWidth * 2 / 3) - 10;
 	// set radius for each node
 	this.treeNodeRadius = 10;
 	// the root node gets drawn in the top center

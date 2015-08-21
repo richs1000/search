@@ -102,7 +102,7 @@ SimModel.prototype.endSearch = function(_solution) {
 	// set the searching flag to false
 	this.searching = false;
 	// set the solution
-	this.solution = [];
+	this.solution = _solution;
 }
 
 

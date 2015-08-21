@@ -50,7 +50,7 @@ GraphModel.prototype.heuristic = function (_graphNodeIndex) {
 
 
 GraphModel.prototype.goalTest = function(_graphNodeIndex) {
-	return false;
+	return this.graphNodes[_graphNodeIndex].nodeName == 'P';
 }
 
 

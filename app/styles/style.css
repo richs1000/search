@@ -44,6 +44,14 @@ th, td {
 	font-size: 24px;
 }
 
+#searchAlgButtons, #graphTreeButtons, #actionButtons {
+	border: 1px inset black;
+}
+
+.chosenButton {
+	background-color: red;
+}
+
 .answerBlock{
 	width:30px;
 	height:30px;
