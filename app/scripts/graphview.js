@@ -288,4 +288,13 @@ GraphView.prototype.drawNode = function(index) {
 	this.graphContext.font = "12pt Helvetica";
 	// draw the node ID
 	this.graphContext.fillText(this.graphNodes[index].name, this.graphNodes[index].x, this.graphNodes[index].y);
+	// set the font for the node's heuristic value
+	this.graphContext.textAlign = "center";
+	this.graphContext.textBaseline = "top";
+	this.graphContext.fillStyle = "black";
+	this.graphContext.font = "10pt Helvetica";
+	// create a string for the heuristic value
+	var hString = "h=" + this.view.controller.simModel.graph.heuristic(index);
+	// draw the heuristic string
+	this.graphContext.fillText(hString, this.graphNodes[index].x, this.graphNodes[index].y);
 }

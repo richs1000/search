@@ -5,6 +5,8 @@ function ClosedListView(_simView) {
 
 
 ClosedListView.prototype.drawClosedList = function(_closedList) {
+	// are we using the closed list?
+	if (! this.simView.controller.simModel.graphSearch) return;
 	// erase the old fringe
 	$( "#closedListDiv" ).html('');
 	// start with an empty string

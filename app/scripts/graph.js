@@ -45,7 +45,14 @@ function GraphModel(_dataModel, _undirected, _weighted) {
 
 
 GraphModel.prototype.heuristic = function (_graphNodeIndex) {
-	return getRandomInt(0, 10);
+	var rowLen = 4;
+	var colLen = 4;
+	var targetIndex = rowLen * colLen - 1;
+	var targetRow = rowLen - 1;
+	var targetCol = colLen - 1;
+	var nodeRow = Math.floor(_graphNodeIndex / rowLen);
+	var nodeCol = _graphNodeIndex % colLen;
+	return (targetRow - nodeRow) + (targetCol - nodeCol);
 };
 
 

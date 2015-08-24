@@ -15,36 +15,43 @@
 			<div class="container">
 
 				<div class="row">
-						<div id="searchAlgButtons" class="col-md-5">
-							<div class="row">
-								<h3>Choose a search algorithm...</h3>
-								<div class="col-md-1"></div>
-								<div class="col-md-2 center-block"><button id="btnDFS" type="button" class="btn btn-primary btnSearch center-block">DFS</button></div>
-								<div class="col-md-2 center-block"><button id="btnBFS" type="button" class="btn btn-primary btnSearch center-block">BFS</button></div>
-								<div class="col-md-2 center-block"><button id="btnUCS" type="button" class="btn btn-primary btnSearch center-block">UCS</button></div>
-								<div class="col-md-2 center-block"><button id="btnGreedy" type="button" class="btn btn-primary btnSearch center-block">Greedy</button></div>
-								<div class="col-md-2 center-block"><button id="btnAStar" type="button" class="btn btn-primary btnSearch center-block">A*</button></div>
-								<div class="col-md-1"></div>
-							</div>
+					<div id="resetButtons" class="col-md-2">
+						<div class="row">
+							<h4>Start a new search...</h4>
+								<div class="col-md-12 center-block">
+									<button id="btnReset" type="button" class="btn btn-primary center-block">Reset</button>
+								</div>
 						</div>
-						<div id="graphTreeButtons" class="col-md-3">
-							<div class="row">
-								<h3>Graph or tree search...</h3>
-								<div class="col-md-6 center-block"><button id="btnGraph" type="button" class="btn btn-primary btnSearch center-block">Graph</button></div>
-								<div class="col-md-6 center-block"><button id="btnTree" type="button" class="btn btn-primary btnSearch center-block">Tree</button></div>
-							</div>
+					</div>
+					<div id="searchAlgButtons" class="col-md-4">
+						<div class="row">
+							<h4>Choose a search algorithm...</h4>
+							<div class="col-md-2 center-block"><button id="btnDFS" type="button" class="btn btn-primary btnSearch center-block">DFS</button></div>
+							<div class="col-md-2 center-block"><button id="btnBFS" type="button" class="btn btn-primary btnSearch center-block">BFS</button></div>
+							<div class="col-md-2 center-block"><button id="btnUCS" type="button" class="btn btn-primary btnSearch center-block">UCS</button></div>
+							<div class="col-md-3 center-block"><button id="btnGreedy" type="button" class="btn btn-primary btnSearch center-block">Greedy</button></div>
+							<div class="col-md-3 center-block"><button id="btnAStar" type="button" class="btn btn-primary btnSearch center-block">A-Star</button></div>
 						</div>
-						<div id="actionButtons" class="col-md-4">
-							<div class="row">
-								<h3>Control search execution...</h3>
-									<div class="col-md-6 center-block">
-										<button id="btnReset" type="button" class="btn btn-primary center-block">Reset</button>
-									</div>
-									<div class="col-md-6 center-block">
-										<button id="btnStep" type="button" class="btn btn-primary center-block" disabled="true">Step</button>
-									</div>
-							</div>
+					</div>
+					<div id="graphTreeButtons" class="col-md-3">
+						<div class="row">
+							<h4>Graph or tree search...</h4>
+							<div class="col-md-6 center-block"><button id="btnGraph" type="button" class="btn btn-primary btnSearch center-block">Graph</button></div>
+							<div class="col-md-6 center-block"><button id="btnTree" type="button" class="btn btn-primary btnSearch center-block">Tree</button></div>
 						</div>
+					</div>
+					<div id="actionButtons" class="col-md-3">
+						<div class="row">
+							<h4>Control search execution...</h4>
+								<div class="col-md-12 center-block">
+									<button id="btnStep" type="button" class="btn btn-primary center-block">Step</button>
+								</div>
+						</div>
+					</div>
+				</div>
+
+				<div class ="row">
+					<h3>Start = A, Target = P</h3>
 				</div>
 
 				<div class="row">

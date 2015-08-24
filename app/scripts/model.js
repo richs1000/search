@@ -75,10 +75,6 @@ SimModel.prototype.resetSimModel = function() {
 	this.fringe = new FringeModel(this);
 	// closed list that stores nodes that have already been searched
 	this.closedList = [];
-	// flag that's true when a search has been started
-	this.searchActive = false;
-	// we always start the search with the first node in the graph
-	this.startSearch(0);
 	// the question bank stores a list of questions and the answer history
 	//this.questionBank = new QuestionBank(this, this.get('numerator'), this.get('denominator'), this.get('firstQuestion'), this.get('lastQuestion'));
 }
@@ -103,10 +99,18 @@ SimModel.prototype.endSearch = function(_solution) {
 	this.searching = false;
 	// set the solution
 	this.solution = _solution;
+	// show the solution
+	this.controller.simView.showSolution();
 }
 
 
 SimModel.prototype.searchStep = function() {
+	// if we haven't started searching yet
+	// we always start the search with the first node in the graph
+	if (! this.searching) {
+		this.startSearch(0);
+		return;
+	}
 	// if the fringe is empty then no solution exists
 	if (this.fringe.length == 0) {
 		this.endSearch([]);
@@ -115,6 +119,7 @@ SimModel.prototype.searchStep = function() {
 	// take the next node off the fringe
 	//
 	var nextFringeNode = this.fringe.getNextNodeFromFringe(this.searchAlgorithm);
+	console.log(nextFringeNode.path);
 	var parentTreeNodeIndex = nextFringeNode.searchTreeNodeIndex;
 	var parentGraphNodeIndex = nextFringeNode.lastNodeInPath();
 	//
@@ -150,55 +155,4 @@ SimModel.prototype.searchStep = function() {
 		// create a new fringe node - _path, _totalCost, _heuristic, _searchTreeNodeIndex
 		this.fringe.addNode(this.tree.treeNodes[newTreeNodeIndex].path, totalPathCost, heuristic, newTreeNodeIndex);
 		}
-}
-
-
-SimModel.prototype.search = function(_startNodeIndex, _searchAlgorithm, _graphSearch) {
-	//
-	// start with...
-	//
-	// an empty fringe
-	this.fringe = [];
-	// an empty tree
-	this.treeNodes = [];
-	this.treeEdges = [];
-	// an empty closed list
-	this.closedList = [];
-	//
-	// initialize the search
-	//
-	this.newTreeRoot(_startNodeIndex);
-	//
-	// search
-	//
-	// as long as we have nodes in the fringe...
-	while (this.fringe.length > 0) {
-		//
-		// take the next node off the fringe
-		//
-		var parentTreeNode = this.getNextNodeFromFringe(_searchAlgorithm);
-		var parentGraphNode = this.nodes[parentTreeNode.lastNode()];
-		//
-		// Am I done?
-		//
-		if (parentGraphNode.goalTest()) return parentTreeNode;
-		//
-		// Expand the node
-		//
-		var childrenGraphNodes = parentGraphNode.expand();
-		//
-		// Add the kids to the fringe
-		//
-		for (var child = 0; child < childrenGraphNodes.lenth; child++) {
-			// get the index of the next child node
-			var childIndex = childrenGraphNodes[child];
-			// if we are using a closed list, check to make sure we haven't already
-			// seen this node
-			if (_graphSearch && this.closedList.indexOf(childIndex) >= 0) continue;
-			// add node to closed list
-			this.closedList.push(childIndex)
-			// create a new tree node
-
-		}
-	}
 }

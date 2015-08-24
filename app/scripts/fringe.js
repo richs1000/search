@@ -172,11 +172,16 @@ FringeModel.prototype.getNextNodeFromFringe = function(_searchAlgorithm) {
 	// DFS - take node at back of fringe (added most recently)
 	} else if (_searchAlgorithm == 'DFS') {
 		return this.fringeNodes.pop();
-	}
-
 	// UCS - take node with lowest total path cost
-
+	} else if (_searchAlgorithm == 'UCS') {
+		var eligibleNodes = this.lowestCost();
 	// Greedy - take node with lowest heuristic
-
+	} else if (_searchAlgorithm == 'Greedy') {
+		var eligibleNodes = this.lowestHeuristic();
 	// A* - take node with lowest g-score
+	} else {
+		var eligibleNodes = this.lowestGScore();
+	}
+	var chosenNode = this.fringeNodes.splice(eligibleNodes[0], 1);
+	return chosenNode[0];
 }

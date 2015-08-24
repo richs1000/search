@@ -40,7 +40,8 @@ function SimController() {
 	//this.simModel.resetSimModel();
 	// initialize the view
 	this.simView = new SimView(this);
-	//this.simView.resetDisplay();
+	// create a new graph, empty the display
+	this.resetSim();
 }
 
 
