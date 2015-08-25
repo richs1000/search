@@ -119,7 +119,6 @@ SimModel.prototype.searchStep = function() {
 	// take the next node off the fringe
 	//
 	var nextFringeNode = this.fringe.getNextNodeFromFringe(this.searchAlgorithm);
-	console.log(nextFringeNode.path);
 	var parentTreeNodeIndex = nextFringeNode.searchTreeNodeIndex;
 	var parentGraphNodeIndex = nextFringeNode.lastNodeInPath();
 	//

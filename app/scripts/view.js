@@ -37,7 +37,7 @@ SimView.prototype.updateDisplay = function() {
 														this.controller.simModel.graph.graphEdges,
 														this.controller.simModel.graph.undirected);
 	// draw the tree
-
+	this.treeView.drawTree( this.controller.simModel.tree );
 	// draw the fringe
 	this.fringeView.drawFringe( this.controller.simModel.fringe );
 	// draw the closed list
@@ -72,7 +72,7 @@ SimView.prototype.displaySearchButtons = function() {
 	for (var i = 0; i < listOfButtons.length; i++) {
 		// create the id string
 		var idString = '#btn' + listOfButtons[i];
-		// hide that button
+		// show that button
 		$( idString ).show();
 	}
 }

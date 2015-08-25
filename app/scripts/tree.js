@@ -2,6 +2,8 @@ function TreeNode(_path) {
 	// each tree node represents a unique path through the graph
 	// represented as a list of indices for the graph nodes array
 	this.path = _path;
+	// each tree node keeps a list of its kids
+	this.children = [];
 }
 
 
@@ -11,6 +13,15 @@ function TreeNode(_path) {
  */
 TreeNode.prototype.lastNode = function() {
 	return this.path[this.path.length - 1];
+}
+
+
+TreeNode.prototype.pathString = function() {
+	var pathStr = '';
+	for (var i = 0; i < this.path.length; i++) {
+		pathStr += String.fromCharCode(65 + this.path[i]);
+	}
+	return pathStr;
 }
 
 
@@ -34,6 +45,31 @@ function TreeModel(_dataModel) {
 	this.treeNodes = [];
 	// list of all the edges in the tree
 	this.treeEdges = [];
+}
+
+
+/*
+ * Sort the paths into lists based on length. I use this to draw the tree
+ */
+TreeModel.prototype.sortLevels = function() {
+	// start with an empty list of lists, each list stores the indices of
+	// tree nodes of the same length
+	var lengthLists = [];
+	// loop through all the nodes in the tree
+	for (var i = 0; i < this.treeNodes.length; i++) {
+		// how long is the path represented by this node?
+		var pathLength = this.treeNodes[i].path.length;
+		// have we seen any paths of this length before?
+		if (!(pathLength in lengthLists)) {
+			// this is the first one - save the index in a new list
+			lengthLists[pathLength] = [i];
+		} else {
+			// add the index to an existing list
+			lengthLists[pathLength].push(i);
+		}
+	}
+	// send back the counts
+	return lengthLists;
 }
 
 
@@ -92,6 +128,8 @@ TreeModel.prototype.newTreeNode = function(_newGraphNodeIndex, _edgeCost, _paren
 	var newTreeEdge = new TreeEdge(_parentTreeNodeIndex, this.treeNodes.length - 1);
 	// Add the edge to our array of edges
 	this.treeEdges.push(newTreeEdge);
+	// update the parent tree node to keep a pointer to the child tree node
+	this.treeNodes[_parentTreeNodeIndex].children.push(this.treeNodes.length - 1);
 	// return the index of the newly-created tree node
 	return this.treeNodes.length - 1;
 }
